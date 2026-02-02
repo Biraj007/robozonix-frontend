@@ -1,0 +1,135 @@
+/* Contact Page Styles - Transparent for 3D Canvas */
+.contact-page .page-hero { 
+  padding: 120px 0 80px; 
+  background: transparent; 
+  text-align: center; 
+}
+
+.contact-section { 
+  background: transparent; 
+}
+
+.contact-grid { 
+  display: grid; 
+  grid-template-columns: 1.2fr 1fr; 
+  gap: 60px; 
+}
+
+.contact-form-wrapper h2 { 
+  font-family: var(--font-heading); 
+  font-size: 1.8rem; 
+  margin-bottom: 32px; 
+}
+
+.contact-form .form-row { 
+  display: grid; 
+  grid-template-columns: 1fr 1fr; 
+  gap: 24px; 
+}
+
+.contact-form .btn { 
+  margin-top: 8px; 
+}
+
+.contact-info { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 32px; 
+}
+
+.info-card { 
+  padding: 32px; 
+  background: rgba(30, 30, 47, 0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-primary); 
+  border-radius: var(--radius-xl); 
+}
+
+.info-card h3 { 
+  font-family: var(--font-heading); 
+  font-size: 1.3rem; 
+  margin-bottom: 24px; 
+}
+
+.info-items { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 20px; 
+}
+
+.info-item { 
+  display: flex; 
+  align-items: flex-start; 
+  gap: 16px; 
+  padding: 16px; 
+  background: rgba(26, 26, 46, 0.8);
+  backdrop-filter: blur(8px);
+  border-radius: var(--radius-md); 
+  transition: var(--transition-normal); 
+}
+
+.info-item:hover { 
+  background: rgba(0, 229, 255, 0.1); 
+}
+
+.info-icon { 
+  font-size: 1.5rem; 
+  color: var(--accent-cyan); 
+  flex-shrink: 0; 
+  margin-top: 4px; 
+}
+
+.info-item div { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 4px; 
+}
+
+.info-item strong { 
+  font-family: var(--font-subheading); 
+  font-size: 0.9rem; 
+  color: var(--text-primary); 
+}
+
+.info-item span { 
+  color: var(--text-secondary); 
+  font-size: 0.95rem; 
+}
+
+.map-container { 
+  flex: 1; 
+  min-height: 300px; 
+}
+
+.map-placeholder { 
+  height: 100%; 
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  justify-content: center; 
+  gap: 12px; 
+  background: rgba(30, 30, 47, 0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-primary); 
+  border-radius: var(--radius-xl); 
+  color: var(--text-muted); 
+  text-align: center; 
+}
+
+.map-placeholder p { 
+  font-family: var(--font-subheading); 
+  font-size: 1.1rem; 
+}
+
+.map-placeholder span { 
+  font-size: 0.85rem; 
+}
+
+@media (max-width: 1024px) { 
+  .contact-grid { 
+    grid-template-columns: 1fr; 
+  } 
+  .contact-form .form-row { 
+    grid-template-columns: 1fr; 
+  } 
+}

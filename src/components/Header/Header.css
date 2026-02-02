@@ -1,0 +1,242 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: transparent;
+  backdrop-filter: blur(0px);
+  border-bottom: 1px solid transparent;
+  transition: var(--transition-normal);
+}
+
+.header-scrolled {
+  background: rgba(18, 18, 18, 0.95);
+  backdrop-filter: blur(20px);
+  box-shadow: var(--shadow-md);
+  border-bottom: 1px solid var(--border-primary);
+}
+
+.header-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Logo Styles */
+.header-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.logo-icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 0 10px #00e5ff);
+}
+
+.logo-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.logo-name {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #00e5ff 0%, #b300ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  letter-spacing: 0.1em;
+}
+
+.logo-tagline {
+  font-family: var(--font-subheading);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+/* Desktop Navigation */
+.desktop-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-link {
+  position: relative;
+  padding: 10px 16px;
+  font-family: var(--font-subheading);
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: var(--transition-normal);
+}
+
+.nav-link:hover {
+  color: var(--text-primary);
+}
+
+.nav-link.active {
+  color: var(--accent-cyan);
+}
+
+.nav-indicator {
+  position: absolute;
+  bottom: 0;
+  left: 8px;
+  right: 8px;
+  width: auto;
+  height: 3px;
+  background: var(--accent-gradient);
+  border-radius: 2px;
+  box-shadow: 0 0 10px var(--accent-cyan), 0 0 20px rgba(0, 229, 255, 0.4);
+}
+
+/* Header Right Section */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.login-link {
+  color: var(--text-secondary);
+}
+
+.login-link:hover {
+  color: var(--accent-cyan);
+}
+
+.dashboard-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--accent-cyan);
+  font-weight: 500;
+}
+
+.dashboard-link:hover {
+  color: var(--accent-magenta);
+}
+
+.dashboard-link svg {
+  font-size: 1.1rem;
+}
+
+.join-btn {
+  padding: 10px 24px;
+  font-size: 0.85rem;
+}
+
+/* Mobile Menu Toggle */
+.mobile-menu-toggle {
+  display: none;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  background: var(--bg-card);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  transition: var(--transition-normal);
+}
+
+.mobile-menu-toggle:hover {
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+}
+
+/* Mobile Navigation */
+.mobile-nav {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-primary);
+  padding: 24px;
+  overflow: hidden;
+}
+
+.mobile-nav-link {
+  display: block;
+  padding: 14px 0;
+  font-family: var(--font-subheading);
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--border-primary);
+  transition: var(--transition-normal);
+}
+
+.mobile-nav-link:hover,
+.mobile-nav-link.active {
+  color: var(--accent-cyan);
+}
+
+.mobile-nav-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border-primary);
+}
+
+.mobile-nav-actions .btn {
+  flex: 1;
+  justify-content: center;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .desktop-nav {
+    display: none;
+  }
+  
+  .login-link {
+    display: none;
+  }
+  
+  .join-btn {
+    display: none;
+  }
+  
+  .mobile-menu-toggle {
+    display: flex;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-container {
+    padding: 0 16px;
+  }
+  
+  .logo-name {
+    font-size: 1.2rem;
+  }
+  
+  .logo-tagline {
+    font-size: 0.65rem;
+  }
+}

@@ -1,0 +1,207 @@
+/* Mobile Drone Container */
+.mobile-drone-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+  overflow: hidden;
+  background: var(--bg-primary);
+}
+
+/* Drone wrapper */
+.mobile-drone {
+  position: absolute;
+  top: 15%;
+  right: 10%;
+  width: 120px;
+  height: 120px;
+  transform-style: preserve-3d;
+  perspective: 500px;
+}
+
+/* Drone Body */
+.drone-body {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50px;
+  height: 20px;
+}
+
+.drone-top {
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 8px;
+  background: linear-gradient(135deg, #ffffff, #e0e0e0);
+  border-radius: 4px 4px 0 0;
+}
+
+.drone-center {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 16px;
+  background: linear-gradient(135deg, #f5f5f5, #d0d0d0);
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.drone-led {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30px;
+  height: 4px;
+  background: var(--accent-cyan);
+  border-radius: 2px;
+  box-shadow: 0 0 10px var(--accent-cyan), 0 0 20px var(--accent-cyan);
+  animation: led-pulse 2s ease-in-out infinite;
+}
+
+.drone-bottom {
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 35px;
+  height: 6px;
+  background: #333;
+  border-radius: 0 0 3px 3px;
+}
+
+/* Drone Arms */
+.drone-arm {
+  position: absolute;
+  width: 45px;
+  height: 8px;
+}
+
+.arm-connector {
+  position: absolute;
+  width: 100%;
+  height: 6px;
+  background: linear-gradient(90deg, #444, #666);
+  border-radius: 3px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.arm-fl {
+  top: 20%;
+  left: -10px;
+  transform: rotate(-45deg);
+}
+
+.arm-fr {
+  top: 20%;
+  right: -10px;
+  transform: rotate(45deg);
+}
+
+.arm-bl {
+  bottom: 20%;
+  left: -10px;
+  transform: rotate(45deg);
+}
+
+.arm-br {
+  bottom: 20%;
+  right: -10px;
+  transform: rotate(-45deg);
+}
+
+/* Motors */
+.motor {
+  position: absolute;
+  right: -8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  background: linear-gradient(135deg, #333, #555);
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.arm-fl .motor,
+.arm-bl .motor {
+  right: auto;
+  left: -8px;
+}
+
+/* Propellers */
+.propeller {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 35px;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+  border-radius: 2px;
+  transform-origin: center;
+}
+
+.prop-spin {
+  animation: spin-fast 0.08s linear infinite;
+}
+
+.prop-spin-reverse {
+  animation: spin-fast-reverse 0.08s linear infinite;
+}
+
+/* Glow effect */
+.drone-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(circle, rgba(0, 229, 255, 0.15) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: glow-pulse 3s ease-in-out infinite;
+}
+
+/* Animations */
+@keyframes spin-fast {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes spin-fast-reverse {
+  from { transform: translate(-50%, -50%) rotate(360deg); }
+  to { transform: translate(-50%, -50%) rotate(0deg); }
+}
+
+@keyframes led-pulse {
+  0%, 100% { 
+    opacity: 1; 
+    box-shadow: 0 0 10px var(--accent-cyan), 0 0 20px var(--accent-cyan);
+  }
+  50% { 
+    opacity: 0.7; 
+    box-shadow: 0 0 5px var(--accent-cyan), 0 0 10px var(--accent-cyan);
+  }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.1); }
+}
+
+/* Responsive - hide on larger screens (desktop uses 3D) */
+@media (min-width: 768px) {
+  .mobile-drone-container {
+    display: none;
+  }
+}

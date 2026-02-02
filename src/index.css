@@ -1,0 +1,727 @@
+/* ============================================
+   ROBOZONIX LABS - Global CSS Variables & Styles
+   Dark Mode Futuristic Robotics Theme
+   ============================================ */
+
+/* Google Fonts Import */
+/* Google Fonts Import Removed - Handled in index.html for better performance */
+
+/* ============================================
+   CSS VARIABLES
+   ============================================ */
+:root {
+  /* Primary Colors - Dark Mode */
+  --bg-primary: #121212;
+  --bg-secondary: #1a1a2e;
+  --bg-tertiary: #16213e;
+  --bg-card: #1e1e2f;
+  --bg-card-hover: #252540;
+
+  /* Accent Colors - Neon & Vibrant */
+  --accent-cyan: #00e5ff;
+  --accent-cyan-glow: rgba(0, 229, 255, 0.3);
+  --accent-purple: #9d4edd;
+  --accent-purple-glow: rgba(157, 78, 221, 0.3);
+  --accent-orange: #ff6b35;
+  --accent-orange-glow: rgba(255, 107, 53, 0.3);
+  --accent-green: #00f5a0;
+  --accent-gradient: linear-gradient(
+    135deg,
+    var(--accent-cyan) 0%,
+    var(--accent-purple) 100%
+  );
+  --accent-gradient-hover: linear-gradient(
+    135deg,
+    var(--accent-purple) 0%,
+    var(--accent-cyan) 100%
+  );
+
+  /* Text Colors */
+  --text-primary: #ffffff;
+  --text-secondary: #b0b0b0;
+  --text-muted: #6b6b6b;
+  --text-accent: var(--accent-cyan);
+
+  /* Border & Divider */
+  --border-primary: rgba(255, 255, 255, 0.1);
+  --border-accent: rgba(0, 229, 255, 0.3);
+
+  /* Shadows & Glows */
+  --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.5);
+  --glow-cyan:
+    0 0 20px var(--accent-cyan-glow), 0 0 40px var(--accent-cyan-glow);
+  --glow-purple:
+    0 0 20px var(--accent-purple-glow), 0 0 40px var(--accent-purple-glow);
+
+  /* Typography */
+  --font-heading: "Orbitron", "Rajdhani", sans-serif;
+  --font-subheading: "Rajdhani", sans-serif;
+  --font-body: "Inter", "Roboto", sans-serif;
+
+  /* Spacing */
+  --section-padding: 100px 0;
+  --container-width: 1200px;
+  --container-padding: 0 24px;
+
+  /* Transitions - Targeted to avoid transform conflicts */
+  --transition-fast: opacity 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+  --transition-normal: opacity 0.3s ease, background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  --transition-slow: opacity 0.5s ease, background 0.5s ease, border-color 0.5s ease;
+
+  /* Border Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 50%;
+}
+
+/* ============================================
+   CSS RESET & BASE STYLES
+   ============================================ */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: transparent; /* Changed from var(--bg-primary) to reveal fixed Canvas */
+  color: var(--text-primary);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Prevent animation blinking/glitching */
+.card,
+.vm-card,
+.lab-card,
+.facility-item,
+.domain-card,
+.course-card,
+.project-card,
+.gallery-item,
+.faq-item,
+.stat-card,
+.dashboard-section,
+.unique-item,
+.value-item,
+.machinery-item,
+.info-card,
+.coming-soon-card {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  perspective: 1000px;
+  transform: translateZ(0);
+  transform-style: preserve-3d;
+}
+
+/* ============================================
+   TYPOGRAPHY
+   ============================================ */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+}
+
+h1 {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  text-transform: uppercase;
+}
+
+h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  text-transform: uppercase;
+}
+
+h3 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+h4 {
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  font-family: var(--font-subheading);
+}
+
+p {
+  font-size: 1rem;
+  color: var(--text-secondary);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: var(--transition-normal);
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background: none;
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+.container {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: var(--container-padding);
+}
+
+.section {
+  padding: var(--section-padding);
+  position: relative;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.section-title {
+  color: var(--text-primary);
+  margin-bottom: 24px;
+  position: relative;
+  display: inline-block;
+}
+
+.section-title::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: var(--accent-gradient);
+  border-radius: 2px;
+  transform: none;
+}
+
+.section-subtitle {
+  font-family: var(--font-subheading);
+  color: var(--accent-cyan);
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  margin-bottom: 8px;
+}
+
+.section-description {
+  max-width: 600px;
+  margin: 0 auto;
+  color: var(--text-secondary);
+}
+
+/* Gradient Text */
+.gradient-text {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ============================================
+   BUTTONS
+   ============================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 32px;
+  font-family: var(--font-subheading);
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border-radius: var(--radius-md);
+  transition: var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary {
+  background: var(--accent-gradient);
+  color: var(--bg-primary);
+  box-shadow: var(--glow-cyan);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 0 30px var(--accent-cyan-glow),
+    0 0 60px var(--accent-cyan-glow);
+  will-change: transform, box-shadow;
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text-primary);
+  border: 2px solid var(--accent-cyan);
+}
+
+.btn-secondary:hover {
+  background: var(--accent-cyan);
+  color: var(--bg-primary);
+  box-shadow: var(--glow-cyan);
+  will-change: background, color, box-shadow;
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--accent-cyan);
+  border: 1px solid var(--border-accent);
+}
+
+.btn-outline:hover {
+  background: rgba(0, 229, 255, 0.1);
+  border-color: var(--accent-cyan);
+}
+
+/* ============================================
+   CARDS
+   ============================================ */
+.card {
+  background: rgba(30, 30, 47, 0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  position: relative;
+  overflow: hidden;
+  /* Removed CSS transition to prevent conflict with Framer Motion */
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--accent-gradient);
+  opacity: 0;
+  transition: var(--transition-normal);
+}
+
+.card:hover {
+  border-color: var(--border-accent);
+  box-shadow: var(--shadow-lg);
+  /* Removed transform: handled by Framer Motion */
+}
+
+.card:hover::before {
+  opacity: 1;
+}
+
+.card-icon {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 229, 255, 0.1);
+  border-radius: var(--radius-md);
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  color: var(--accent-cyan);
+}
+
+.card-title {
+  font-family: var(--font-subheading);
+  font-size: 1.25rem;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+.card-description {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+/* ============================================
+   GRID LAYOUTS
+   ============================================ */
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+@media (max-width: 1024px) {
+  .grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .grid-2,
+  .grid-3,
+  .grid-4 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes glow {
+  0%,
+  100% {
+    box-shadow: var(--glow-cyan);
+  }
+  50% {
+    box-shadow:
+      0 0 40px var(--accent-cyan-glow),
+      0 0 80px var(--accent-cyan-glow);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ============================================
+   SCROLLBAR
+   ============================================ */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent-cyan);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-purple);
+}
+
+/* ============================================
+   SELECTION
+   ============================================ */
+::selection {
+  background: var(--accent-cyan);
+  color: var(--bg-primary);
+}
+
+/* ============================================
+   LOADING SPINNER
+   ============================================ */
+.loader {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--border-primary);
+  border-top-color: var(--accent-cyan);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ============================================
+   FORM ELEMENTS
+   ============================================ */
+.form-group {
+  margin-bottom: 24px;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 8px;
+  font-family: var(--font-subheading);
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.form-input,
+.form-textarea,
+.form-select {
+  width: 100%;
+  padding: 14px 18px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  transition: var(--transition-normal);
+}
+
+.form-input:focus,
+.form-textarea:focus,
+.form-select:focus {
+  outline: none;
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 0 3px var(--accent-cyan-glow);
+}
+
+.form-textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+/* ============================================
+   BADGES & TAGS
+   ============================================ */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 14px;
+  font-family: var(--font-subheading);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: var(--radius-sm);
+  background: rgba(0, 229, 255, 0.15);
+  color: var(--accent-cyan);
+  border: 1px solid var(--accent-cyan);
+}
+
+.badge-purple {
+  background: rgba(157, 78, 221, 0.15);
+  color: var(--accent-purple);
+  border-color: var(--accent-purple);
+}
+
+.badge-orange {
+  background: rgba(255, 107, 53, 0.15);
+  color: var(--accent-orange);
+  border-color: var(--accent-orange);
+}
+
+/* ============================================
+   BACKGROUND EFFECTS
+   ============================================ */
+/* ============================================
+   BACKGROUND EFFECTS
+   ============================================ */
+.bg-grid {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-primary); /* Added Dark Background base */
+  background-image:
+    linear-gradient(rgba(0, 229, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 229, 255, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  pointer-events: none;
+  z-index: -2; /* Moved behind HeroCanvas (-1) */
+}
+
+.bg-glow {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    var(--accent-cyan-glow) 0%,
+    transparent 70%
+  );
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ============================================
+   GLOBAL PAGE HERO STYLES
+   ============================================ */
+.page-hero {
+  padding: 140px 0 80px;
+  background: transparent; /* Transparent to show 3D canvas */
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Glow effect removed for cleaner look */
+
+.page-hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.page-title {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  margin-bottom: 20px;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.page-description {
+  font-size: 1.15rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  max-width: 550px;
+  margin: 0 auto;
+}
+
+/* Badge Level Variants */
+.badge.beginner {
+  background: rgba(0, 245, 160, 0.15);
+  color: var(--accent-green);
+  border-color: var(--accent-green);
+}
+
+.badge.intermediate {
+  background: rgba(0, 229, 255, 0.15);
+  color: var(--accent-cyan);
+  border-color: var(--accent-cyan);
+}
+
+.badge.advanced {
+  background: rgba(157, 78, 221, 0.15);
+  color: var(--accent-purple);
+  border-color: var(--accent-purple);
+}
+
+/* Filter button styles */
+.filter-btn {
+  padding: 10px 20px;
+  font-family: var(--font-subheading);
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  background: var(--bg-card);
+  border: 1px solid var(--border-primary);
+  border-radius: 50px;
+  cursor: pointer;
+  transition: var(--transition-normal);
+}
+
+.filter-btn:hover {
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+}
+
+.filter-btn.active {
+  background: var(--accent-gradient);
+  border-color: transparent;
+  color: var(--bg-primary);
+}
+
+.filter-icon {
+  color: var(--text-muted);
+  font-size: 1.2rem;
+}
+
+/* ============================================
+   ALIGNMENT UTILITIES
+   ============================================ */
+.text-left {
+  text-align: left !important;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+.text-right {
+  text-align: right !important;
+}
+
+/* Fix for Left Aligned Section Titles - Now handled by default */
+/* .text-left .section-title::after rules removed as default covers it */
+

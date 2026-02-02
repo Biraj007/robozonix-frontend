@@ -1,0 +1,210 @@
+/* Facilities Page Styles */
+.facilities-page .page-hero {
+  padding: 120px 0 80px;
+  background: transparent;
+  text-align: center;
+}
+
+/* Labs Section */
+.labs-section {
+  background: transparent;
+}
+
+.labs-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+}
+
+.lab-card {
+  padding: 40px;
+  background: rgba(30, 30, 47, 0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-xl);
+  /* Removed CSS transition to prevent conflict with Framer Motion */
+}
+
+.lab-card:hover {
+  border-color: var(--border-accent);
+}
+
+.lab-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.lab-icon {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 229, 255, 0.1);
+  border-radius: var(--radius-md);
+  font-size: 1.5rem;
+  color: var(--accent-cyan);
+}
+
+.lab-header h3 {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+}
+
+.lab-description {
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+  line-height: 1.7;
+}
+
+.lab-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border-primary);
+}
+
+.lab-equipment h4,
+.lab-usecases h4 {
+  font-family: var(--font-subheading);
+  font-size: 0.9rem;
+  color: var(--accent-cyan);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 12px;
+}
+
+.lab-equipment ul {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.lab-equipment li {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  padding-left: 16px;
+  position: relative;
+}
+
+.lab-equipment li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--accent-cyan);
+}
+
+.usecase-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* Machinery Section */
+.machinery-section {
+  background: transparent;
+}
+
+.machinery-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.machinery-item {
+  padding: 20px;
+  background: rgba(30, 30, 47, 0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  /* Removed CSS transition to prevent conflict with Framer Motion */
+}
+
+.machinery-item:hover {
+  border-color: var(--border-accent);
+}
+
+.machinery-name {
+  font-family: var(--font-subheading);
+  font-size: 0.95rem;
+  color: var(--text-primary);
+}
+
+.machinery-category {
+  align-self: flex-start;
+  font-size: 0.7rem;
+  padding: 4px 10px;
+}
+
+/* Safety Section */
+.safety-section {
+  background: transparent;
+}
+
+.safety-content {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 48px;
+  background: rgba(255, 107, 53, 0.08);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--accent-orange);
+  border-radius: var(--radius-xl);
+}
+
+.safety-content h2 {
+  font-family: var(--font-heading);
+  font-size: 1.8rem;
+  margin-bottom: 16px;
+  color: var(--accent-orange);
+}
+
+.safety-content > p {
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+}
+
+.safety-list {
+  text-align: left;
+  display: inline-block;
+}
+
+.safety-list li {
+  color: var(--text-secondary);
+  padding: 8px 0 8px 24px;
+  position: relative;
+}
+
+.safety-list li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--accent-green);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .labs-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .machinery-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .lab-details {
+    grid-template-columns: 1fr;
+  }
+  
+  .machinery-grid {
+    grid-template-columns: 1fr;
+  }
+}

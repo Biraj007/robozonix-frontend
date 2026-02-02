@@ -1,0 +1,436 @@
+/* ============================================
+   HOME PAGE STYLES
+   ============================================ */
+
+/* Hero Section */
+/* Hero Section */
+.hero-section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding: 100px 24px;
+  /* Background moved to fixed HeroCanvas */
+  background: transparent;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 10; /* Increased z-index */
+  text-align: center;
+  max-width: 900px;
+  pointer-events: none; /* Let clicks pass through to canvas if needed, but text selectable */
+}
+.hero-content > * {
+  pointer-events: auto;
+}
+
+.hero-badge {
+  display: inline-block;
+  padding: 8px 20px;
+  background: rgba(0, 229, 255, 0.1);
+  border: 1px solid var(--accent-cyan);
+  border-radius: 50px;
+  font-family: var(--font-subheading);
+  font-size: 0.85rem;
+  color: var(--accent-cyan);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: 24px;
+  backdrop-filter: blur(4px);
+}
+
+.hero-title {
+  font-size: clamp(3rem, 7vw, 5.5rem); /* Increased size */
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 24px;
+  color: #fff; /* Solid white base */
+  background: linear-gradient(135deg, #ffffff 0%, #e0ffff 50%, #00e5ff 100%); /* Brighter gradient */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 4px 20px rgba(0, 229, 255, 0.3); /* Shadow to separate from background */
+}
+
+.hero-description {
+  font-size: 1.25rem; /* Increased size: approx 20px */
+  color: #e0e0e0; /* Light grey for contrast */
+  max-width: 650px;
+  margin: 0 auto 40px;
+  line-height: 1.7;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Improved readability */
+}
+
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Social Proof (Stats) */
+.social-proof {
+  display: flex;
+  justify-content: center;
+  gap: 48px;
+  margin-top: 80px;
+  padding: 32px 48px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.4); /* Dark semi-transparent background */
+  backdrop-filter: blur(12px); /* Glassmorphism */
+  border-radius: var(--radius-lg);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  position: relative;
+  z-index: 5;
+}
+
+.proof-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.proof-value {
+  font-family: var(--font-heading);
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--accent-cyan);
+  text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+}
+
+.proof-label {
+  font-size: 0.9rem;
+  color: #d0d0d0; /* Brighter label color */
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+}
+
+/* Scroll Indicator */
+.scroll-indicator {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: #fff;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  opacity: 0.8;
+  z-index: 5;
+}
+
+.scroll-line {
+  width: 2px;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--accent-cyan), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; height: 30px; }
+  50% { opacity: 1; height: 50px; }
+}
+
+/* Domains Section */
+.domains-section {
+  background: transparent;
+}
+
+.domains-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.domain-card {
+  text-align: center;
+}
+
+.domain-card .card-icon {
+  margin: 0 auto 20px;
+}
+
+/* Facilities Preview */
+.facilities-preview {
+  background: transparent;
+}
+
+.facilities-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: start;
+}
+
+.facilities-text {
+  position: sticky;
+  top: 120px;
+}
+
+.facilities-text .section-subtitle {
+  margin-bottom: 8px;
+  display: block;
+  color: var(--accent-cyan);
+}
+
+.facilities-text .section-title {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.facilities-text .section-title::after {
+  left: 0;
+  transform: none;
+}
+
+.facilities-text .section-description {
+  text-align: left;
+  margin: 0 0 32px 0;
+  max-width: none;
+}
+
+.facilities-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.facility-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 24px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-lg);
+  /* Removed CSS transition to prevent conflict with Framer Motion */
+}
+
+.facility-item:hover {
+  border-color: var(--border-accent);
+  /* Removed transform: handled by Framer Motion if enabled, or removed to avoid conflict */
+}
+
+.facility-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-cyan);
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.facility-item h4 {
+  font-family: var(--font-subheading);
+  font-size: 1.1rem;
+  margin-bottom: 4px;
+  color: var(--text-primary);
+}
+
+.facility-item p {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+/* Courses Preview */
+.courses-preview {
+  background: transparent;
+}
+
+.courses-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.course-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.course-level {
+  align-self: flex-start;
+}
+
+.course-level.beginner {
+  background: rgba(0, 245, 160, 0.15);
+  color: var(--accent-green);
+  border-color: var(--accent-green);
+}
+
+.course-level.intermediate {
+  background: rgba(0, 229, 255, 0.15);
+  color: var(--accent-cyan);
+  border-color: var(--accent-cyan);
+}
+
+.course-level.advanced {
+  background: rgba(157, 78, 221, 0.15);
+  color: var(--accent-purple);
+  border-color: var(--accent-purple);
+}
+
+.course-meta {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.course-card .btn {
+  margin-top: auto;
+}
+
+.section-cta {
+  text-align: center;
+  margin-top: 48px;
+}
+
+/* Stats Section */
+.stats-section {
+  /* Semi-transparent to let blur show through but keep stats readable */
+  background: rgba(22, 33, 62, 0.4); 
+  padding: 80px 0;
+  backdrop-filter: blur(5px);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  text-align: center;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.stat-value {
+  font-family: var(--font-heading);
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.stat-label {
+  font-family: var(--font-subheading);
+  font-size: 1rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* CTA Section */
+.cta-section {
+  background: transparent;
+  padding: 100px 0;
+}
+
+.cta-content {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.cta-content h2 {
+  font-size: 2.5rem;
+  margin-bottom: 16px;
+}
+
+.cta-content p {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  margin-bottom: 32px;
+}
+
+.cta-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .courses-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .domains-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .facilities-content {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  
+  .facilities-text {
+    position: static;
+    text-align: center;
+  }
+  
+  .facilities-text .section-title::after {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .facilities-text .section-description {
+    text-align: center;
+    margin: 0 auto 32px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 80px 16px;
+  }
+  
+  .social-proof {
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+  
+  .proof-item {
+    flex: 1 0 40%;
+  }
+  
+  .domains-grid,
+  .courses-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .hero-actions,
+  .cta-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .hero-actions .btn,
+  .cta-actions .btn {
+    width: 100%;
+    max-width: 300px;
+  }
+}
