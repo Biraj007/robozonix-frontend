@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiFilter, FiExternalLink, FiGithub } from "react-icons/fi";
+import api from "../../services/api";
 import { 
   fadeInUp, 
   staggerContainer, 
@@ -9,68 +10,33 @@ import {
 import "./Projects.css";
 
 const Projects = () => {
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [activeFilter, setActiveFilter] = useState("all");
-
-  const projects = [
-    {
-      id: 1,
-      title: "Autonomous Navigation Robot",
-      category: "robotics",
-      tech: ["ROS", "SLAM", "LiDAR"],
-      description:
-        "A self-navigating robot using SLAM algorithms and LiDAR sensors.",
-      outcome: "Successfully navigates indoor environments autonomously.",
-    },
-    {
-      id: 2,
-      title: "Smart Agriculture IoT System",
-      category: "iot",
-      tech: ["ESP32", "AWS IoT", "Sensors"],
-      description:
-        "Connected farming solution for monitoring soil and crop health.",
-      outcome: "30% water savings through intelligent irrigation.",
-    },
-    {
-      id: 3,
-      title: "Hexacopter Drone",
-      category: "drone",
-      tech: ["Pixhawk", "GPS", "Telemetry"],
-      description: "Custom-built hexacopter for aerial surveying and mapping.",
-      outcome: "Stable 30-minute flight time with 4K camera.",
-    },
-    {
-      id: 4,
-      title: "AI Vision Quality Inspector",
-      category: "ai",
-      tech: ["OpenCV", "TensorFlow", "Raspberry Pi"],
-      description: "Machine vision system for manufacturing defect detection.",
-      outcome: "99.2% accuracy in defect detection.",
-    },
-    {
-      id: 5,
-      title: "Industrial Robotic Arm",
-      category: "robotics",
-      tech: ["Servo Motors", "Arduino", "Inverse Kinematics"],
-      description: "6-DOF robotic arm for pick and place operations.",
-      outcome: "Precision placement within 0.5mm accuracy.",
-    },
-    {
-      id: 6,
-      title: "Smart Home Automation Hub",
-      category: "iot",
-      tech: ["Zigbee", "MQTT", "Node.js"],
-      description: "Centralized home automation system with voice control.",
-      outcome: "Seamless integration of 20+ smart devices.",
-    },
-  ];
 
   const filters = [
     { key: "all", label: "All Projects" },
-    { key: "robotics", label: "Robotics" },
-    { key: "iot", label: "IoT" },
-    { key: "drone", label: "Drones" },
-    { key: "ai", label: "AI" },
+    { key: "Robotics", label: "Robotics" },
+    { key: "IoT", label: "IoT" },
+    { key: "Drones", label: "Drones" },
+    { key: "AI/ML", label: "AI" },
   ];
+
+  useEffect(() => {
+    fetchProjects();
+  }, []);
+
+  const fetchProjects = async () => {
+    try {
+      const response = await api.get('/content/projects');
+      setProjects(response.data.projects || response.data || []);
+    } catch (error) {
+      console.error('Error fetching projects:', error);
+      setProjects([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const filteredProjects =
     activeFilter === "all"
@@ -112,53 +78,76 @@ const Projects = () => {
             ))}
           </div>
 
-          <motion.div 
-            className="projects-grid"
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            layout
-          >
-            <AnimatePresence mode="popLayout">
-              {filteredProjects.map((project) => (
-                <motion.div
-                  key={project.id}
-                  className="project-card"
-                  variants={cardVariants}
-                  whileHover="hover"
-                  layout
-                >
-                  <div className="project-image">
-                    <div className="project-placeholder">📸</div>
-                  </div>
-                  <div className="project-content">
-                    <span className="project-category badge">
-                      {project.category}
-                    </span>
-                    <h3>{project.title}</h3>
-                    <p>{project.description}</p>
-                    <div className="project-tech">
-                      {project.tech.map((t, i) => (
-                        <span key={i}>{t}</span>
-                      ))}
+          {loading ? (
+            <div className="loading-state">
+              <div className="loading-spinner"></div>
+              <p>Loading projects...</p>
+            </div>
+          ) : filteredProjects.length === 0 ? (
+            <div className="empty-state">
+              <p>{projects.length === 0 ? 'No projects added yet. Check back soon!' : 'No projects match this filter.'}</p>
+            </div>
+          ) : (
+            <motion.div 
+              className="projects-grid"
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+              layout
+            >
+              <AnimatePresence mode="popLayout">
+                {filteredProjects.map((project) => (
+                  <motion.div
+                    key={project._id}
+                    className="project-card"
+                    variants={cardVariants}
+                    whileHover="hover"
+                    layout
+                  >
+                    <div className="project-image">
+                      {project.coverImage ? (
+                        <img src={project.coverImage} alt={project.title} />
+                      ) : (
+                        <div className="project-placeholder">📸</div>
+                      )}
                     </div>
-                    <div className="project-outcome">
-                      <strong>Outcome:</strong> {project.outcome}
+                    <div className="project-content">
+                      <span className="project-category badge">
+                        {project.category}
+                      </span>
+                      <h3>{project.title}</h3>
+                      <p>{project.description}</p>
+                      {project.technologies && (
+                        <div className="project-tech">
+                          {project.technologies.slice(0, 4).map((t, i) => (
+                            <span key={i}>{t}</span>
+                          ))}
+                        </div>
+                      )}
+                      {project.outcomes && (
+                        <div className="project-outcome">
+                          <strong>Outcome:</strong> {project.outcomes}
+                        </div>
+                      )}
+                      <div className="project-links">
+                        {project.demoUrl && (
+                          <a href={project.demoUrl} className="btn btn-outline" target="_blank" rel="noopener noreferrer">
+                            <FiExternalLink /> Demo
+                          </a>
+                        )}
+                        {project.githubUrl && (
+                          <a href={project.githubUrl} className="btn btn-secondary" target="_blank" rel="noopener noreferrer">
+                            <FiGithub /> Source
+                          </a>
+                        )}
+                      </div>
                     </div>
-                    <div className="project-links">
-                      <button className="btn btn-outline">
-                        <FiExternalLink /> Details
-                      </button>
-                      <button className="btn btn-secondary">
-                        <FiGithub /> Source
-                      </button>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </AnimatePresence>
-          </motion.div>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </motion.div>
+          )}
         </div>
       </section>
     </div>

@@ -15,6 +15,45 @@
   gap: 24px; 
 }
 
+/* Standardized Filter Buttons */
+.event-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.filter-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 24px;
+  height: 40px;
+  border-radius: 50px;
+  background: rgba(30, 30, 47, 0.6);
+  border: 1px solid var(--border-primary);
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.filter-btn:hover {
+  border-color: var(--accent-cyan);
+  color: var(--text-primary);
+  background: rgba(30, 30, 47, 0.8);
+}
+
+.filter-btn.active {
+  background: var(--accent-gradient);
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(0, 229, 255, 0.3);
+}
+
 .event-card { 
   padding: 32px; 
   background: rgba(30, 30, 47, 0.85); 

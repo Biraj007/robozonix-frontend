@@ -96,7 +96,7 @@ html {
 
 body {
   font-family: var(--font-body);
-  background-color: transparent; /* Changed from var(--bg-primary) to reveal fixed Canvas */
+  background-color: var(--bg-primary); /* Restored solid background */
   color: var(--text-primary);
   line-height: 1.6;
   overflow-x: hidden;

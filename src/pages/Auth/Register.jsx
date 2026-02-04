@@ -90,7 +90,6 @@ const Register = () => {
         >
           <div className="auth-header">
             <Link to="/" className="auth-logo">
-              <span className="logo-icon">⚡</span>
               <span className="logo-name">ROBOZONIX</span>
             </Link>
             <h1>Join Robozonix Labs</h1>

@@ -102,33 +102,17 @@
   margin-bottom: 20px;
 }
 
+.footer-logo-image {
+  height: 60px; /* Slightly larger than header logo */
+  width: auto;
+  object-fit: contain;
+}
+
+/* Legacy styles kept for fallback structure */
 .footer-logo .logo-icon {
   font-size: 1.8rem;
 }
 
-.footer-logo .logo-text {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.1;
-}
-
-.footer-logo .logo-name {
-  font-family: var(--font-heading);
-  font-size: 1.2rem;
-  font-weight: 800;
-  background: var(--accent-gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  letter-spacing: 0.1em;
-}
-
-.footer-logo .logo-tagline {
-  font-family: var(--font-subheading);
-  font-size: 0.65rem;
-  color: var(--text-secondary);
-  letter-spacing: 0.3em;
-}
 
 .footer-description {
   color: var(--text-secondary);

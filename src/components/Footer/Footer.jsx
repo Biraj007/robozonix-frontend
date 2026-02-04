@@ -8,6 +8,7 @@ import {
   FaYoutube,
   FaGithub,
 } from "react-icons/fa";
+import logoFull from "../../assets/images/Robozonix-full-logo.webp";
 import "./Footer.css";
 
 const Footer = () => {
@@ -87,11 +88,7 @@ const Footer = () => {
             {/* Brand Column */}
             <div className="footer-brand">
               <Link to="/" className="footer-logo">
-                <span className="logo-icon">⚡</span>
-                <div className="logo-text">
-                  <span className="logo-name">ROBOZONIX</span>
-                  <span className="logo-tagline">LABS</span>
-                </div>
+                <img src={logoFull} alt="Robozonix Labs" className="footer-logo-image" />
               </Link>
               <p className="footer-description">
                 A cutting-edge robotics and technology lab empowering students,

@@ -36,7 +36,7 @@ const Login = () => {
     const result = await login(formData);
     
     if (result.success) {
-      navigate("/dashboard");
+      navigate("/");
     } else {
       setFormError(result.error);
     }
@@ -52,7 +52,6 @@ const Login = () => {
         >
           <div className="auth-header">
             <Link to="/" className="auth-logo">
-              <span className="logo-icon">⚡</span>
               <span className="logo-name">ROBOZONIX</span>
             </Link>
             <h1>Welcome Back</h1>

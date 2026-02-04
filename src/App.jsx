@@ -24,18 +24,29 @@ const Login = lazy(() => import("./pages/Auth/Login"));
 const Register = lazy(() => import("./pages/Auth/Register"));
 const Dashboard = lazy(() => import("./pages/Dashboard/Dashboard"));
 
-// Lazy load heavy components
-const HeroCanvas = lazy(() => import("./components/Hero/HeroCanvas"));
+// Admin pages
+const AdminLayout = lazy(() => import("./pages/Admin/AdminLayout"));
+const AdminDashboard = lazy(() => import("./pages/Admin/AdminDashboard"));
+const BlogManager = lazy(() => import("./pages/Admin/BlogManager"));
+const EventManager = lazy(() => import("./pages/Admin/EventManager"));
+const CourseManager = lazy(() => import("./pages/Admin/CourseManager"));
+const ProjectManager = lazy(() => import("./pages/Admin/ProjectManager"));
+const FacilityManager = lazy(() => import("./pages/Admin/FacilityManager"));
+const UserManager = lazy(() => import("./pages/Admin/UserManager"));
+const Settings = lazy(() => import("./pages/Admin/Settings"));
+
+// Restored Chatbot
 const Chatbot = lazy(() => import("./components/Chatbot/Chatbot"));
-const MobileDrone = lazy(() => import("./components/MobileDrone/MobileDrone"));
+const MorphingParticles = lazy(() => import("./components/Hero/MorphingParticles"));
 
 // Layout component to conditionally show header/footer
 const Layout = ({ children, appReady }) => {
   const location = useLocation();
   const authRoutes = ['/login', '/register'];
   const isAuthPage = authRoutes.includes(location.pathname);
+  const isAdminPage = location.pathname.startsWith('/admin');
+  const hideChrome = isAuthPage || isAdminPage; // Hide header/footer on auth and admin pages
   const [isMobile, setIsMobile] = useState(false);
-  const [load3D, setLoad3D] = useState(false);
 
   // Check if mobile device
   useEffect(() => {
@@ -47,45 +58,15 @@ const Layout = ({ children, appReady }) => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Defer 3D loading to avoid blocking main thread
-  useEffect(() => {
-    if (!appReady) return;
-
-    // Use requestIdleCallback if available, or fallback to timeout
-    const loadHeavyAssets = () => {
-      setLoad3D(true);
-    };
-
-    if ('requestIdleCallback' in window) {
-      const handle = window.requestIdleCallback(loadHeavyAssets, { timeout: 3000 });
-      return () => window.cancelIdleCallback(handle);
-    } else {
-      const timer = setTimeout(loadHeavyAssets, 2000);
-      return () => clearTimeout(timer);
-    }
-  }, [appReady]);
-
   return (
     <div className={`app ${appReady ? 'visible' : ''}`}>
-      {/* Background Grid Effect */}
-      <div className="bg-grid"></div>
+      {/* Background Particles */}
+      <Suspense fallback={null}>
+        <MorphingParticles />
+      </Suspense>
 
-      {/* Global 3D Background - Only on desktop, deferred load */}
-      {load3D && !isMobile && (
-        <Suspense fallback={null}>
-          <HeroCanvas />
-        </Suspense>
-      )}
-
-      {/* Lightweight 3D Drone for Mobile, deferred load */}
-      {load3D && isMobile && (
-        <Suspense fallback={null}>
-          <MobileDrone />
-        </Suspense>
-      )}
-
-      {/* Header/Navigation - hidden on auth pages */}
-      {!isAuthPage && <Header />}
+      {/* Header/Navigation - hidden on auth and admin pages */}
+      {!hideChrome && <Header />}
 
       {/* Main Content */}
       <main className="main-content">
@@ -94,11 +75,11 @@ const Layout = ({ children, appReady }) => {
         </Suspense>
       </main>
 
-      {/* Footer - hidden on auth pages */}
-      {!isAuthPage && <Footer />}
+      {/* Footer - hidden on auth and admin pages */}
+      {!hideChrome && <Footer />}
 
-      {/* Chatbot - hidden on auth pages, lazy loaded */}
-      {!isAuthPage && (
+      {/* Chatbot - hidden on auth and admin pages */}
+      {!hideChrome && (
         <Suspense fallback={null}>
           <Chatbot />
         </Suspense>
@@ -179,6 +160,18 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/dashboard" element={<Dashboard />} />
+              
+              {/* Admin Routes */}
+              <Route path="/admin" element={<AdminLayout />}>
+                <Route index element={<AdminDashboard />} />
+                <Route path="blogs" element={<BlogManager />} />
+                <Route path="events" element={<EventManager />} />
+                <Route path="courses" element={<CourseManager />} />
+                <Route path="projects" element={<ProjectManager />} />
+                <Route path="facilities" element={<FacilityManager />} />
+                <Route path="users" element={<UserManager />} />
+                <Route path="settings" element={<Settings />} />
+              </Route>
             </Routes>
           </Layout>
         </Router>

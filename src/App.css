@@ -12,7 +12,7 @@
 
 .main-content {
   flex: 1;
-  margin-top: 80px; /* Account for fixed header */
+  margin-top: 0; /* Header overlays content now */
 }
 
 /* Page Loader for Lazy Loading */

@@ -124,13 +124,14 @@
   align-items: center;
   justify-content: center;
   color: #00e5ff;
+  font-size: 42px; /* Add size for the icon */
   filter: drop-shadow(0 0 10px #00e5ff);
   animation: pulse-icon 2s ease-in-out infinite;
 }
 
 @keyframes pulse-icon {
-  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-  50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.8; }
+  0%, 100% { transform: translate(-50%, -50%) rotate(90deg) scale(1); opacity: 1; }
+  50% { transform: translate(-50%, -50%) rotate(90deg) scale(1.1); opacity: 0.8; }
 }
 
 /* Typography */

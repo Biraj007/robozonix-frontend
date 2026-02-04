@@ -162,9 +162,19 @@
 }
 
 .stat-value {
+  font-family: var(--font-heading); /* Use heading font for numbers */
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.stat-unit {
   font-family: var(--font-subheading);
-  font-size: 1.2rem;
-  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-weight: 400;
+  margin-left: 4px;
 }
 
 .progress-bar {
@@ -327,25 +337,160 @@
   color: var(--text-muted);
 }
 
+/* Mobile Header */
+.dashboard-mobile-header {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  background: rgba(30, 30, 47, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border-primary);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+}
+
+.mobile-title {
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  color: var(--accent-cyan);
+}
+
+.mobile-toggle {
+  background: transparent;
+  border: 1px solid var(--border-primary);
+  color: var(--text-primary);
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+/* Sidebar Overlay */
+.dashboard-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 99;
+}
+
+.close-sidebar-mobile {
+  display: none;
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+.empty-state {
+  text-align: center;
+  padding: 40px;
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--radius-lg);
+}
+
+.no-data-msg {
+  color: var(--text-muted);
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
 @media (max-width: 1024px) {
   .dashboard-container {
     grid-template-columns: 1fr;
+    gap: 0; /* Remove gap as sidebar is gone */
   }
+  
   .dashboard-sidebar {
-    position: static;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    height: 100vh;
+    width: 280px;
+    z-index: 101;
+    border-radius: 0;
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-right: 1px solid var(--border-primary);
+    background: #121216; /* Solid background */
+    overflow-y: auto;
   }
+
+  .dashboard-sidebar.open {
+    transform: translateX(0);
+    box-shadow: 20px 0 50px rgba(0, 0, 0, 0.5);
+  }
+
+  .close-sidebar-mobile {
+    display: block;
+  }
+  
+  .dashboard-mobile-header {
+    display: flex;
+  }
+  
+  .dashboard-main {
+    padding-top: 80px; /* Clearance for mobile header */
+  }
+  
+  .dashboard-heading {
+    margin-top: 0;
+  }
+
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 768px) {
+  .dashboard-page {
+    padding: 16px;
+  }
+  
   .stats-grid {
     grid-template-columns: 1fr;
   }
+  
   .booking-item {
     flex-direction: column;
     align-items: flex-start;
     gap: 12px;
+  }
+  
+  .dashboard-section {
+    padding: 16px;
+  }
+  
+  .course-progress {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    gap: 8px;
+  }
+  
+  .course-item {
+     flex-direction: column;
+     align-items: flex-start;
+     gap: 16px;
+  }
+  
+  .courses-list .course-info {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 }

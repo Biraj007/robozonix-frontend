@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import {
   FiArrowRight,
   FiCpu,
-  FiZap,
   FiUsers,
   FiAward,
   FiCode,
@@ -36,7 +35,7 @@ const Home = () => {
       desc: "Connect and automate with IoT solutions",
     },
     {
-      icon: <FiZap />,
+      icon: <FiActivity />,
       title: "Drone & UAV",
       desc: "Design and test aerial systems",
     },

@@ -35,6 +35,21 @@
   text-decoration: none;
 }
 
+.logo-image {
+  height: 45px;
+  width: auto;
+  object-fit: contain;
+}
+
+.logo-full {
+  display: block;
+}
+
+.logo-short {
+  display: none;
+}
+
+/* Legacy text logo styles (kept for fallback) */
 .logo-icon {
   font-size: 2rem;
   flex-shrink: 0;
@@ -74,19 +89,20 @@
 .desktop-nav {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 4px; /* Reduced gap slightly to fit more items */
 }
 
 .nav-link {
   position: relative;
-  padding: 10px 16px;
+  padding: 8px 12px; /* Slightly reduced padding */
   font-family: var(--font-subheading);
-  font-size: 0.95rem;
+  font-size: 0.9rem; /* Slightly smaller font */
   font-weight: 500;
   color: var(--text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   transition: var(--transition-normal);
+  white-space: nowrap; /* Prevent wrapping */
 }
 
 .nav-link:hover {
@@ -113,7 +129,7 @@
 .header-right {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
 }
 
 .login-link {
@@ -141,75 +157,86 @@
 }
 
 .join-btn {
-  padding: 10px 24px;
+  padding: 8px 20px;
   font-size: 0.85rem;
+  white-space: nowrap;
 }
 
 /* Mobile Menu Toggle */
 .mobile-menu-toggle {
   display: none;
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   color: var(--text-primary);
-  background: var(--bg-card);
+  background: rgba(30, 30, 47, 0.5); /* Semi-transparent */
   border: 1px solid var(--border-primary);
   border-radius: var(--radius-md);
   transition: var(--transition-normal);
+  cursor: pointer;
+  z-index: 2001; /* Ensure well above everything */
+  pointer-events: auto;
 }
 
 .mobile-menu-toggle:hover {
   border-color: var(--accent-cyan);
   color: var(--accent-cyan);
+  background: rgba(30, 30, 47, 0.9);
 }
 
 /* Mobile Navigation */
 .mobile-nav {
-  position: absolute;
-  top: 100%;
+  position: fixed;
+  top: 0;
   left: 0;
   right: 0;
-  background: var(--bg-secondary);
-  border-bottom: 1px solid var(--border-primary);
-  padding: 24px;
-  overflow: hidden;
+  bottom: 0;
+  height: 100vh;
+  background: #111; /* Solid black/dark background */
+  padding: 80px 24px 24px 24px; /* Reduced top padding */
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  z-index: 2000; /* Below toggle button (2001) */
 }
 
 .mobile-nav-link {
   display: block;
-  padding: 14px 0;
+  padding: 16px 0;
   font-family: var(--font-subheading);
-  font-size: 1.1rem;
-  font-weight: 500;
+  font-size: 1.2rem;
+  font-weight: 600;
   color: var(--text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  border-bottom: 1px solid var(--border-primary);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05); /* Subtle border */
   transition: var(--transition-normal);
 }
 
 .mobile-nav-link:hover,
 .mobile-nav-link.active {
   color: var(--accent-cyan);
+  padding-left: 10px; /* Slide effect */
 }
 
 .mobile-nav-actions {
-  display: flex;
-  gap: 12px;
-  margin-top: 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 32px;
   padding-top: 24px;
   border-top: 1px solid var(--border-primary);
 }
 
 .mobile-nav-actions .btn {
-  flex: 1;
   justify-content: center;
+  padding: 12px;
 }
 
 /* Responsive */
-@media (max-width: 1200px) {
+@media (max-width: 1280px) { /* Increased breakpoint for earlier mobile menu */
   .desktop-nav {
     display: none;
   }
@@ -219,24 +246,35 @@
   }
   
   .join-btn {
-    display: none;
+    display: none; /* Hide join button on medium screens to declutter */
   }
   
   .mobile-menu-toggle {
     display: flex;
+  }
+
+  .header-right .admin-link,
+  .header-right .dashboard-link {
+    display: none; /* Hide desktop specific links in header right on mobile */
   }
 }
 
 @media (max-width: 480px) {
   .header-container {
     padding: 0 16px;
+    height: 70px;
   }
   
-  .logo-name {
-    font-size: 1.2rem;
+  .mobile-nav {
+    padding-top: 75px; /* Adjust padding for smaller header */
+  }
+
+  .logo-full {
+    display: none;
   }
   
-  .logo-tagline {
-    font-size: 0.65rem;
+  .logo-short {
+    display: block;
+    height: 40px;
   }
 }

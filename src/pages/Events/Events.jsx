@@ -1,64 +1,48 @@
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { FiCalendar, FiMapPin, FiUsers, FiArrowRight } from "react-icons/fi";
+import { FiCalendar, FiMapPin, FiUsers, FiArrowRight, FiClock } from "react-icons/fi";
+import api from "../../services/api";
 import "./Events.css";
 
 const Events = () => {
-  const upcomingEvents = [
-    {
-      id: 1,
-      title: "RoboHack 2026",
-      type: "Hackathon",
-      date: "Feb 15-16, 2026",
-      location: "Robozonix Labs",
-      capacity: "100 Teams",
-      description: "48-hour robotics hackathon with exciting prizes.",
-    },
-    {
-      id: 2,
-      title: "Drone Racing Championship",
-      type: "Competition",
-      date: "Mar 5, 2026",
-      location: "Outdoor Arena",
-      capacity: "50 Participants",
-      description: "High-speed FPV drone racing competition.",
-    },
-    {
-      id: 3,
-      title: "IoT Summit 2026",
-      type: "Tech Fest",
-      date: "Mar 20-21, 2026",
-      location: "Robozonix Labs",
-      capacity: "200 Attendees",
-      description: "Annual IoT conference with industry speakers.",
-    },
-  ];
+  const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [filter, setFilter] = useState('All');
 
-  const workshops = [
-    {
-      id: 1,
-      title: "PCB Design Bootcamp",
-      date: "Every Saturday",
-      duration: "4 hours",
-      level: "Beginner",
-    },
-    {
-      id: 2,
-      title: "ROS2 Workshop",
-      date: "Feb 8, 2026",
-      duration: "6 hours",
-      level: "Intermediate",
-    },
-    {
-      id: 3,
-      title: "Drone Building Workshop",
-      date: "Feb 22, 2026",
-      duration: "8 hours",
-      level: "Beginner",
-    },
-  ];
+  const eventTypes = ['All', 'Workshop', 'Seminar', 'Competition', 'Training', 'Hackathon', 'Webinar'];
 
-  const programs = [
+  useEffect(() => {
+    fetchEvents();
+  }, []);
+
+  const fetchEvents = async () => {
+    try {
+      const response = await api.get('/content/events');
+      setEvents(response.data.events || response.data || []);
+    } catch (error) {
+      console.error('Error fetching events:', error);
+      setEvents([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      weekday: 'short',
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
+  };
+
+  const filteredEvents = filter === 'All' 
+    ? events 
+    : events.filter(e => e.eventType === filter);
+
+  // Fallback static data for when API is empty
+  const staticPrograms = [
     {
       title: "School Programs",
       desc: "STEM education programs for K-12 students with hands-on robotics activities.",
@@ -92,81 +76,75 @@ const Events = () => {
         </div>
       </section>
 
-      {/* Upcoming Events */}
+      {/* Filter Tabs */}
       <section className="section events-section">
         <div className="container">
-          <div className="section-header">
-            <span className="section-subtitle">Upcoming</span>
-            <h2 className="section-title">Featured Events</h2>
-          </div>
-          <div className="events-grid">
-            {upcomingEvents.map((event, index) => (
-              <motion.div
-                key={event.id}
-                className="event-card"
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ delay: index * 0.05, duration: 0.4 }}
+          <div className="event-filters">
+            {eventTypes.map((type) => (
+              <button
+                key={type}
+                className={`filter-btn ${filter === type ? 'active' : ''}`}
+                onClick={() => setFilter(type)}
               >
-                <span className="event-type badge">{event.type}</span>
-                <h3>{event.title}</h3>
-                <p>{event.description}</p>
-                <div className="event-meta">
-                  <span>
-                    <FiCalendar /> {event.date}
-                  </span>
-                  <span>
-                    <FiMapPin /> {event.location}
-                  </span>
-                  <span>
-                    <FiUsers /> {event.capacity}
-                  </span>
-                </div>
-                <button className="btn btn-primary">
-                  Register Now <FiArrowRight />
-                </button>
-              </motion.div>
+                {type}
+              </button>
             ))}
           </div>
+
+          {loading ? (
+            <div className="loading-state">
+              <div className="loading-spinner"></div>
+              <p>Loading events...</p>
+            </div>
+          ) : filteredEvents.length === 0 ? (
+            <div className="empty-state">
+              <p>{events.length === 0 ? 'No events scheduled yet. Check back soon!' : 'No events match this filter.'}</p>
+            </div>
+          ) : (
+            <div className="events-grid">
+              {filteredEvents.map((event, index) => (
+                <motion.div
+                  key={event._id}
+                  className="event-card"
+                  initial={{ opacity: 0, y: 15 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ delay: index * 0.05, duration: 0.4 }}
+                >
+                  <span className="event-type badge">{event.eventType}</span>
+                  <h3>{event.title}</h3>
+                  <p>{event.description}</p>
+                  <div className="event-meta">
+                    <span>
+                      <FiCalendar /> {formatDate(event.date)}
+                    </span>
+                    {event.location && (
+                      <span>
+                        <FiMapPin /> {event.location}
+                      </span>
+                    )}
+                    {event.capacity && (
+                      <span>
+                        <FiUsers /> {event.registeredCount || 0}/{event.capacity}
+                      </span>
+                    )}
+                  </div>
+                  {event.price !== undefined && (
+                    <div className="event-price">
+                      {event.price === 0 ? 'Free' : `₹${event.price}`}
+                    </div>
+                  )}
+                  <button className="btn btn-primary">
+                    Register Now <FiArrowRight />
+                  </button>
+                </motion.div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
-      {/* Workshops */}
-      <section className="section workshops-section">
-        <div className="container">
-          <div className="section-header">
-            <span className="section-subtitle">Learn</span>
-            <h2 className="section-title">Workshops & Bootcamps</h2>
-          </div>
-          <div className="workshops-grid">
-            {workshops.map((workshop, index) => (
-              <motion.div
-                key={workshop.id}
-                className="workshop-card card"
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.4 }}
-              >
-                <span className={`badge ${workshop.level.toLowerCase()}`}>
-                  {workshop.level}
-                </span>
-                <h4>{workshop.title}</h4>
-                <div className="workshop-meta">
-                  <span>
-                    <FiCalendar /> {workshop.date}
-                  </span>
-                  <span>Duration: {workshop.duration}</span>
-                </div>
-                <button className="btn btn-outline">Learn More</button>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Programs */}
+      {/* Programs Section */}
       <section className="section programs-section">
         <div className="container">
           <div className="section-header">
@@ -174,7 +152,7 @@ const Events = () => {
             <h2 className="section-title">Training Programs</h2>
           </div>
           <div className="programs-grid">
-            {programs.map((program, index) => (
+            {staticPrograms.map((program, index) => (
               <motion.div
                 key={index}
                 className="program-card card"

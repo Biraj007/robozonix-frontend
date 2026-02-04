@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiMenu, FiX, FiUser, FiZap } from "react-icons/fi";
+import { FiMenu, FiX, FiUser, FiSettings } from "react-icons/fi";
 import { useAuth } from "../../context/AuthContext";
+import logoFull from "../../assets/images/Robozonix-full-logo.webp";
+import logoShort from "../../assets/images/Robozonix-short-logo.webp";
 import "./Header.css";
 
 const Header = () => {
@@ -43,10 +45,8 @@ const Header = () => {
       <div className="header-container">
         {/* Logo */}
         <Link to="/" className="header-logo">
-          <div className="logo-text">
-            <span className="logo-name">ROBOZONIX</span>
-            <span className="logo-tagline">LABS</span>
-          </div>
+          <img src={logoFull} alt="Robozonix Labs" className="logo-image logo-full" />
+          <img src={logoShort} alt="Robozonix" className="logo-image logo-short" />
         </Link>
 
         {/* Desktop Navigation */}
@@ -73,6 +73,12 @@ const Header = () => {
         <div className="header-right">
           {isAuthenticated ? (
             <>
+              {/* Admin Dashboard Link - only for admin/editor roles */}
+              {(user?.role === 'admin' || user?.role === 'editor') && (
+                <Link to="/admin" className="nav-link admin-link">
+                  <span>Admin</span>
+                </Link>
+              )}
               <Link to="/dashboard" className="nav-link dashboard-link">
                 <FiUser />
                 <span>{firstName}</span>
@@ -104,49 +110,44 @@ const Header = () => {
       </div>
 
       {/* Mobile Navigation */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.nav
-            className="mobile-nav"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            {navLinks.map((link, index) => (
-              <motion.div
-                key={link.path}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: index * 0.05 }}
-              >
-                <Link
-                  to={link.path}
-                  className={`mobile-nav-link ${location.pathname === link.path ? "active" : ""}`}
-                >
-                  {link.name}
-                </Link>
-              </motion.div>
-            ))}
-            <div className="mobile-nav-actions">
-              {isAuthenticated ? (
-                <Link to="/dashboard" className="btn btn-primary">
-                  Dashboard
-                </Link>
-              ) : (
-                <>
-                  <Link to="/login" className="btn btn-secondary">
-                    Login
+      {/* Mobile Navigation */}
+      {isMobileMenuOpen && (
+        <div className="mobile-nav">
+          {navLinks.map((link, index) => (
+            <Link
+              key={link.path}
+              to={link.path}
+              className={`mobile-nav-link ${location.pathname === link.path ? "active" : ""}`}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              {link.name}
+            </Link>
+          ))}
+          <div className="mobile-nav-actions">
+            {isAuthenticated ? (
+              <>
+                {(user?.role === 'admin' || user?.role === 'editor') && (
+                  <Link to="/admin" className="btn btn-secondary" onClick={() => setIsMobileMenuOpen(false)}>
+                    Admin
                   </Link>
-                  <Link to="/register" className="btn btn-primary">
-                    Join Lab
-                  </Link>
-                </>
-              )}
-            </div>
-          </motion.nav>
-        )}
-      </AnimatePresence>
+                )}
+                <Link to="/dashboard" className="btn btn-primary" onClick={() => setIsMobileMenuOpen(false)}>
+                  <FiUser /> Dashboard
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link to="/login" className="btn btn-secondary" onClick={() => setIsMobileMenuOpen(false)}>
+                  Login
+                </Link>
+                <Link to="/register" className="btn btn-primary" onClick={() => setIsMobileMenuOpen(false)}>
+                  Join Lab
+                </Link>
+              </>
+            )}
+          </div>
+        </div>
+      )}
     </header>
   );
 };

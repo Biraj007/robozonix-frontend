@@ -1,10 +1,12 @@
+import { FaRobot } from 'react-icons/fa';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiZap } from 'react-icons/fi';
+
 import './SplashScreen.css';
 
 const SplashScreen = ({ onComplete }) => {
   const [progress, setProgress] = useState(0);
+
   const [loadingText, setLoadingText] = useState('Initializing');
 
   useEffect(() => {
@@ -79,7 +81,9 @@ const SplashScreen = ({ onComplete }) => {
                   }}
                 />
               </svg>
-              <span className="logo-icon"><FiZap size={40} /></span>
+              <span className="logo-icon">
+                <FaRobot />
+              </span>
             </div>
           </motion.div>
 

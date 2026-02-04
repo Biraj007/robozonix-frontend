@@ -8,21 +8,21 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start; /* Align left */
   justify-content: center;
   position: relative;
   overflow: hidden;
-  padding: 100px 24px;
+  padding: 100px 8%; /* 8% left padding */
   /* Background moved to fixed HeroCanvas */
   background: transparent;
 }
 
 .hero-content {
   position: relative;
-  z-index: 10; /* Increased z-index */
-  text-align: center;
-  max-width: 900px;
-  pointer-events: none; /* Let clicks pass through to canvas if needed, but text selectable */
+  z-index: 10;
+  text-align: left; /* Align Left */
+  max-width: 650px; /* Constrain width */
+  pointer-events: none;
 }
 .hero-content > * {
   pointer-events: auto;
@@ -44,31 +44,31 @@
 }
 
 .hero-title {
-  font-size: clamp(3rem, 7vw, 5.5rem); /* Increased size */
+  font-size: clamp(3rem, 7vw, 5.5rem);
   font-weight: 900;
   line-height: 1.1;
   margin-bottom: 24px;
-  color: #fff; /* Solid white base */
-  background: linear-gradient(135deg, #ffffff 0%, #e0ffff 50%, #00e5ff 100%); /* Brighter gradient */
+  color: #fff;
+  background: linear-gradient(135deg, #ffffff 0%, #e0ffff 50%, #00e5ff 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  text-shadow: 0 4px 20px rgba(0, 229, 255, 0.3); /* Shadow to separate from background */
+  text-shadow: 0 4px 20px rgba(0, 229, 255, 0.3);
 }
 
 .hero-description {
-  font-size: 1.25rem; /* Increased size: approx 20px */
-  color: #e0e0e0; /* Light grey for contrast */
-  max-width: 650px;
-  margin: 0 auto 40px;
+  font-size: 1.25rem;
+  color: #e0e0e0;
+  max-width: 600px;
+  margin: 0 0 40px 0; /* Align Left */
   line-height: 1.7;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Improved readability */
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .hero-actions {
   display: flex;
   gap: 16px;
-  justify-content: center;
+  justify-content: flex-start; /* Align Left */
   flex-wrap: wrap;
 }
 
@@ -339,9 +339,10 @@
 }
 
 .cta-content {
-  text-align: center;
+  text-align: left; /* Align Left */
   max-width: 600px;
-  margin: 0 auto;
+  margin: 0; /* Align Left container */
+  padding-left: 8%; /* Match Hero padding */
 }
 
 .cta-content h2 {
@@ -358,7 +359,7 @@
 .cta-actions {
   display: flex;
   gap: 16px;
-  justify-content: center;
+  justify-content: flex-start; /* Align Buttons Left */
 }
 
 /* Responsive */
