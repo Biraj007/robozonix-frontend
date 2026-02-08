@@ -40,11 +40,9 @@ const Footer = () => {
 
   const socialLinks = [
     { icon: <FaFacebookF />, url: "#", label: "Facebook" },
-    { icon: <FaTwitter />, url: "#", label: "Twitter" },
     { icon: <FaInstagram />, url: "#", label: "Instagram" },
     { icon: <FaLinkedinIn />, url: "#", label: "LinkedIn" },
     { icon: <FaYoutube />, url: "#", label: "YouTube" },
-    { icon: <FaGithub />, url: "#", label: "GitHub" },
   ];
 
   return (
@@ -151,9 +149,11 @@ const Footer = () => {
                   </a>
                 ))}
               </div>
-              <h4 className="footer-heading" style={{ marginTop: "24px" }}>
-                Legal
-              </h4>
+            </div>
+
+            {/* Legal */}
+            <div className="footer-column">
+              <h4 className="footer-heading">Legal</h4>
               <ul className="footer-links">
                 {legalLinks.map((link) => (
                   <li key={link.name}>
@@ -174,7 +174,7 @@ const Footer = () => {
               © {currentYear} Robozonix Labs. All rights reserved.
             </p>
             <p className="made-with">
-              Made with <span className="heart">❤</span> by <span className="author-signature">Biraj ♾️</span>
+              Made with <span className="heart">❤</span> by <a href="https://www.linkedin.com/in/biraj-naskar" target="_blank" rel="noopener noreferrer" className="author-signature" style={{ textDecoration: 'none' }}>Biraj ♾️</a>
             </p>
           </div>
         </div>

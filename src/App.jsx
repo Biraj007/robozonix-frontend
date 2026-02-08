@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import { HashRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { useEffect, lazy, Suspense, useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import { AuthProvider } from "./context/AuthContext";
@@ -33,19 +33,19 @@ const CourseManager = lazy(() => import("./pages/Admin/CourseManager"));
 const ProjectManager = lazy(() => import("./pages/Admin/ProjectManager"));
 const FacilityManager = lazy(() => import("./pages/Admin/FacilityManager"));
 const UserManager = lazy(() => import("./pages/Admin/UserManager"));
-const Settings = lazy(() => import("./pages/Admin/Settings"));
+const ChatbotManager = lazy(() => import("./pages/Admin/ChatbotManager"));
 
 // Restored Chatbot
 const Chatbot = lazy(() => import("./components/Chatbot/Chatbot"));
 const MorphingParticles = lazy(() => import("./components/Hero/MorphingParticles"));
 
 // Layout component to conditionally show header/footer
-const Layout = ({ children, appReady }) => {
+const Layout = ({ children, appReady, show3D }) => {
   const location = useLocation();
   const authRoutes = ['/login', '/register'];
   const isAuthPage = authRoutes.includes(location.pathname);
   const isAdminPage = location.pathname.startsWith('/admin');
-  const hideChrome = isAuthPage || isAdminPage; // Hide header/footer on auth and admin pages
+  const hideChrome = isAuthPage || isAdminPage;
   const [isMobile, setIsMobile] = useState(false);
 
   // Check if mobile device
@@ -60,10 +60,12 @@ const Layout = ({ children, appReady }) => {
 
   return (
     <div className={`app ${appReady ? 'visible' : ''}`}>
-      {/* Background Particles */}
-      <Suspense fallback={null}>
-        <MorphingParticles />
-      </Suspense>
+      {/* Background Particles - deferred for performance */}
+      {show3D && (
+        <Suspense fallback={null}>
+          <MorphingParticles />
+        </Suspense>
+      )}
 
       {/* Header/Navigation - hidden on auth and admin pages */}
       {!hideChrome && <Header />}
@@ -91,35 +93,47 @@ const Layout = ({ children, appReady }) => {
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [appReady, setAppReady] = useState(false);
+  const [show3D, setShow3D] = useState(false);
+
+  // Defer 3D scene initialization for better FCP
+  useEffect(() => {
+    const initId = requestIdleCallback(() => setShow3D(true), { timeout: 200 });
+    return () => cancelIdleCallback(initId);
+  }, []);
 
   useEffect(() => {
-    // Lazy load Lenis for smooth scrolling
-    import("lenis").then(({ default: Lenis }) => {
-      const lenis = new Lenis({
-        duration: 1.2,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        direction: "vertical",
-        gestureDirection: "vertical",
-        smooth: true,
-        mouseMultiplier: 1,
-        smoothTouch: false,
-        touchMultiplier: 2,
-      });
-      
-      window.lenis = lenis;
+    // Defer Lenis loading to reduce initial TBT
+    const lenisId = requestIdleCallback(() => {
+      import("lenis").then(({ default: Lenis }) => {
+        const lenis = new Lenis({
+          duration: 1.2,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          direction: "vertical",
+          gestureDirection: "vertical",
+          smooth: true,
+          mouseMultiplier: 1,
+          smoothTouch: false,
+          touchMultiplier: 2,
+        });
+        
+        window.lenis = lenis;
 
-      function raf(time) {
-        lenis.raf(time);
+        function raf(time) {
+          lenis.raf(time);
+          requestAnimationFrame(raf);
+        }
+
         requestAnimationFrame(raf);
-      }
+      });
+    }, { timeout: 500 });
 
-      requestAnimationFrame(raf);
-
-      return () => {
-        lenis.destroy();
+    return () => {
+      cancelIdleCallback(lenisId);
+      if (window.lenis) {
+        window.lenis.destroy();
         window.lenis = null;
-      };
-    });
+      }
+    };
   }, []);
 
   const handleSplashComplete = () => {
@@ -144,7 +158,7 @@ function App() {
       {!isLoading && (
         <Router>
           <ScrollToTop />
-          <Layout appReady={appReady}>
+          <Layout appReady={appReady} show3D={show3D}>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
@@ -170,7 +184,7 @@ function App() {
                 <Route path="projects" element={<ProjectManager />} />
                 <Route path="facilities" element={<FacilityManager />} />
                 <Route path="users" element={<UserManager />} />
-                <Route path="settings" element={<Settings />} />
+                <Route path="chatbot" element={<ChatbotManager />} />
               </Route>
             </Routes>
           </Layout>

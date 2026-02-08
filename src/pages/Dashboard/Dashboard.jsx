@@ -3,17 +3,13 @@ import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import {
-  FiUser,
   FiCreditCard,
   FiBook,
   FiCalendar,
   FiDownload,
-  FiSettings,
   FiLogOut,
   FiClock,
   FiAward,
-  FiMenu,
-  FiX
 } from "react-icons/fi";
 import { fadeInUp, staggerContainer } from "../../utils/animations";
 import "./Dashboard.css";
@@ -28,9 +24,6 @@ const Dashboard = () => {
     return null;
   }
 
-  // Get first name from user's full name
-  const firstName = user?.name?.split(" ")[0] || "User";
-
   // User data with real info
   const userData = {
     name: user?.name || "User",
@@ -41,10 +34,7 @@ const Dashboard = () => {
     labHoursTotal: 30,
   };
 
-  /* Mobile Sidebar Toggle */
-  const [isSidebarOpen, setSidebarOpen] = useState(false);
-  const toggleSidebar = () => setSidebarOpen(!isSidebarOpen);
-  const closeSidebar = () => setSidebarOpen(false);
+
 
   // Handle logout
   const handleLogout = () => {
@@ -72,61 +62,8 @@ const Dashboard = () => {
   return (
     <div className="dashboard-page">
       {/* Mobile Header */}
-      <div className="dashboard-mobile-header">
-        <button className="mobile-toggle" onClick={toggleSidebar}>
-          {isSidebarOpen ? <FiX /> : <FiUser />}
-        </button>
-        <div className="mobile-title">Dashboard</div>
-      </div>
-
-      {/* Sidebar Overlay */}
-      {isSidebarOpen && <div className="dashboard-overlay" onClick={closeSidebar}></div>}
-
       <div className="dashboard-container">
-        {/* Sidebar */}
-        <motion.aside 
-          className={`dashboard-sidebar ${isSidebarOpen ? 'open' : ''}`}
-          initial={{ x: -20, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          <button className="close-sidebar-mobile" onClick={closeSidebar}>
-            <FiX />
-          </button>
 
-          <div className="sidebar-user">
-            <div className="user-avatar">
-              <span className="avatar-initials">{getInitials(userData.name)}</span>
-            </div>
-            <div className="user-info">
-              <h4>{userData.name}</h4>
-              <span>{userData.plan}</span>
-            </div>
-          </div>
-          <nav className="sidebar-nav">
-            <a href="#overview" className="nav-item active" onClick={closeSidebar}>
-              <FiUser /> Overview
-            </a>
-            <a href="#membership" className="nav-item" onClick={closeSidebar}>
-              <FiCreditCard /> Membership
-            </a>
-            <a href="#courses" className="nav-item" onClick={closeSidebar}>
-              <FiBook /> My Courses
-            </a>
-            <a href="#bookings" className="nav-item" onClick={closeSidebar}>
-              <FiCalendar /> Lab Bookings
-            </a>
-            <a href="#certificates" className="nav-item" onClick={closeSidebar}>
-              <FiAward /> Certificates
-            </a>
-            <a href="#settings" className="nav-item" onClick={closeSidebar}>
-              <FiSettings /> Settings
-            </a>
-          </nav>
-          <button className="sidebar-logout" onClick={handleLogout}>
-            <FiLogOut /> Logout
-          </button>
-        </motion.aside>
 
         {/* Main Content */}
         <main className="dashboard-main">
@@ -136,7 +73,8 @@ const Dashboard = () => {
             variants={fadeInUp}
             className="dashboard-heading"
           >
-            Welcome back, {firstName}!
+            Welcome back, {userData.name}
+            <span className="plan-badge-large">{userData.plan}</span>
           </motion.h1>
 
           {/* Stats Grid */}
@@ -300,6 +238,18 @@ const Dashboard = () => {
               <p className="no-data-msg">No certificates earned yet.</p>
             )}
           </motion.section>
+          <motion.div 
+            className="dashboard-logout-container"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeInUp}
+            style={{ marginTop: '40px', display: 'flex', justifyContent: 'center' }}
+          >
+             <button className="logout-btn-large" onClick={handleLogout}>
+               <FiLogOut /> Logout
+             </button>
+          </motion.div>
         </main>
       </div>
     </div>

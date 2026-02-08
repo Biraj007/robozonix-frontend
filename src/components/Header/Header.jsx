@@ -8,7 +8,7 @@ import logoShort from "../../assets/images/Robozonix-short-logo.webp";
 import "./Header.css";
 
 const Header = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(() => typeof window !== 'undefined' ? window.scrollY > 50 : false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
   const { isAuthenticated, user } = useAuth();
@@ -45,8 +45,8 @@ const Header = () => {
       <div className="header-container">
         {/* Logo */}
         <Link to="/" className="header-logo">
-          <img src={logoFull} alt="Robozonix Labs" className="logo-image logo-full" />
-          <img src={logoShort} alt="Robozonix" className="logo-image logo-short" />
+          <img src={logoFull} alt="Robozonix Labs" className="logo-image logo-full" width="180" height="40" loading="eager" />
+          <img src={logoShort} alt="Robozonix" className="logo-image logo-short" width="40" height="40" loading="eager" />
         </Link>
 
         {/* Desktop Navigation */}
@@ -61,8 +61,9 @@ const Header = () => {
               {location.pathname === link.path && (
                 <motion.div
                   className="nav-indicator"
-                  layoutId="nav-indicator"
-                  transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.2 }}
                 />
               )}
             </Link>
@@ -79,12 +80,9 @@ const Header = () => {
                   <span>Admin</span>
                 </Link>
               )}
-              <Link to="/dashboard" className="nav-link dashboard-link">
+              <Link to="/dashboard" className="btn btn-primary join-btn" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <FiUser />
                 <span>{firstName}</span>
-              </Link>
-              <Link to="/dashboard" className="btn btn-primary join-btn">
-                Dashboard
               </Link>
             </>
           ) : (
@@ -93,7 +91,7 @@ const Header = () => {
                 Login
               </Link>
               <Link to="/register" className="btn btn-primary join-btn">
-                Join Lab
+                Join Us
               </Link>
             </>
           )}
@@ -131,9 +129,7 @@ const Header = () => {
                     Admin
                   </Link>
                 )}
-                <Link to="/dashboard" className="btn btn-primary" onClick={() => setIsMobileMenuOpen(false)}>
-                  <FiUser /> Dashboard
-                </Link>
+
               </>
             ) : (
               <>
@@ -141,7 +137,7 @@ const Header = () => {
                   Login
                 </Link>
                 <Link to="/register" className="btn btn-primary" onClick={() => setIsMobileMenuOpen(false)}>
-                  Join Lab
+                  Join Us
                 </Link>
               </>
             )}

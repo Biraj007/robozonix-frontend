@@ -105,14 +105,17 @@
 
 .checkbox-label {
   display: flex;
-  align-items: center;
-  gap: 8px;
+  align-items: flex-start; /* Better for multi-line text */
+  gap: 12px;
   color: var(--text-secondary);
   font-size: 0.9rem;
+  line-height: 1.4;
   cursor: pointer;
+  text-align: left;
 }
 
 .checkbox-label input {
+  margin-top: 3px;
   accent-color: var(--accent-cyan);
 }
 

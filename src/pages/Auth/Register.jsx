@@ -46,8 +46,8 @@ const Register = () => {
 
     if (!formData.email.trim()) {
       errors.email = "Email is required";
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      errors.email = "Please enter a valid email";
+    } else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(formData.email)) {
+      errors.email = "Please enter a valid email address";
     }
 
     if (!formData.password) {
@@ -188,9 +188,11 @@ const Register = () => {
                 onChange={(e) => setAgreedToTerms(e.target.checked)}
                 disabled={loading}
               />
-              I agree to the{" "}
-              <Link to="/terms">Terms of Service</Link> and{" "}
-              <Link to="/privacy">Privacy Policy</Link>
+              <span>
+                I agree to the{" "}
+                <Link to="/terms">Terms of Service</Link> and{" "}
+                <Link to="/privacy">Privacy Policy</Link>
+              </span>
             </label>
             {formErrors.terms && <span className="field-error">{formErrors.terms}</span>}
 
@@ -222,6 +224,9 @@ const Register = () => {
           <div className="auth-footer">
             <p>
               Already have an account? <Link to="/login">Login</Link>
+            </p>
+            <p style={{ marginTop: '12px', fontSize: '0.9rem' }}>
+              <Link to="/" style={{ color: 'var(--text-muted)', textDecoration: 'none' }}>Skip</Link>
             </p>
           </div>
         </motion.div>

@@ -3,9 +3,16 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { Canvas } from "@react-three/fiber";
 import * as THREE from "three";
 
-// Ultra High count for Close-Up Density (Main Model Only)
-const MORPH_COUNT = 40000;
-// Removed AMBIENT_COUNT (Noise) as per user request
+// Device detection for performance scaling
+const getIsMobile = () => {
+  if (typeof window === 'undefined') return false;
+  return window.innerWidth < 768 || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+};
+
+// Reduced particle counts for better performance
+// Desktop: 20K (was 40K), Mobile: 5K
+const IS_MOBILE = getIsMobile();
+const MORPH_COUNT = IS_MOBILE ? 5000 : 20000;
 const TOTAL_COUNT = MORPH_COUNT;
 
 // --- Helper Functions ---
@@ -421,10 +428,13 @@ const MorphingScene = () => {
   }, [droneStatic, droneCurrent, planeStatic, planeCurrent, currentPositions]);
 
   useFrame((state) => {
+    // Skip updates when tab is hidden for performance
+    if (document.hidden) return;
+    
     const time = clock.getElapsedTime();
-    const maxScroll = Math.max(document.documentElement.scrollHeight - window.innerHeight, 0); // Ensure >= 0
+    const maxScroll = Math.max(document.documentElement.scrollHeight - window.innerHeight, 0);
     let scrollPct = 0;
-    if (maxScroll > 10) { // Only calculate if page is actually scrollable
+    if (maxScroll > 10) {
         scrollPct = Math.min(Math.max(window.scrollY / maxScroll, 0), 1);
     }
 
@@ -598,11 +608,12 @@ const MorphingScene = () => {
   );
 };
 
-// Animated 'Pretty' Starfield
+// Animated 'Pretty' Starfield - reduced count for performance
 const StarField = () => {
   const mesh = useRef();
   const circleTex = useMemo(() => getCircleTexture(), []);
-  const count = 4000;
+  // Reduced star count: 1500 desktop, 500 mobile (was 4000)
+  const count = IS_MOBILE ? 500 : 1500;
 
   // Generate Positions and Colors
   const [positions, colors] = useMemo(() => {
@@ -634,8 +645,9 @@ const StarField = () => {
   }, []);
 
   useFrame((state, delta) => {
+    // Skip when tab is hidden
+    if (document.hidden) return;
     if (mesh.current) {
-      // Slow Drift Rotation
       mesh.current.rotation.y -= delta * 0.05;
       mesh.current.rotation.x += delta * 0.01;
     }
@@ -688,7 +700,12 @@ const MorphingParticles = () => {
     >
       <Canvas
         camera={{ position: [0, 0, 22], fov: 50 }}
-        gl={{ antialias: true, alpha: true }}
+        gl={{ 
+          antialias: false,  // Disable for better performance
+          alpha: true,
+          powerPreference: "high-performance"
+        }}
+        dpr={Math.min(window.devicePixelRatio, 1.5)}  // Cap pixel ratio
       >
         <color attach="background" args={["#0a0a14"]} />
         <MorphingScene />

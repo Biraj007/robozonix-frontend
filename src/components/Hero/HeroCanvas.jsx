@@ -16,11 +16,11 @@ const RealisticDrone = () => {
       timeRef.current += delta;
       const t = timeRef.current * 0.3; // Speed
 
-      // Constrained Hover Path (Visible Screen Area)
-      // x range approx +/- 4.0
-      const x = Math.sin(t) * 3 + Math.cos(t * 1.5) * 1.0; 
+      // Constrained Hover Path (Keep visible on all screens)
+      // Reduced x range to prevent going off-screen on large monitors
+      const x = Math.sin(t) * 2.5 + Math.cos(t * 1.5) * 0.8; 
       const y = Math.max(0.5, Math.cos(t * 0.7) * 1.0 + 1.5); // Altitude 0.5 - 2.5
-      const z = Math.sin(t * 0.5) * 2; // Shallow depth
+      const z = Math.sin(t * 0.5) * 1.5; // Reduced depth
 
       droneRef.current.position.set(x, y, z);
 
@@ -1201,7 +1201,7 @@ const HeroCanvas = () => {
     <Canvas
       dpr={[1, 1.2]}
       performance={{ min: 0.3 }}
-      camera={{ position: [0, 0, 10], fov: 45 }}
+      camera={{ position: [0, 0, 10], fov: 50, near: 0.1, far: 100 }}
       gl={{ 
         antialias: false, 
         powerPreference: "high-performance",

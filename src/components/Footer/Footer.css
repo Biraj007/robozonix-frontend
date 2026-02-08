@@ -86,8 +86,8 @@
 
 .footer-grid {
   display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr 1fr;
-  gap: 48px;
+  grid-template-columns: 1.4fr 0.9fr 0.9fr 1fr 0.8fr; /* 5 Columns */
+  gap: 32px;
 }
 
 /* Brand Column */
@@ -289,13 +289,16 @@
   }
   
   .footer-grid {
-    grid-template-columns: 1fr;
-    gap: 32px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    row-gap: 40px;
   }
   
   .footer-brand {
-    grid-column: span 1;
+    grid-column: 1 / -1;
   }
+  
+  /* Removed specific rule for last child to allow 2-column flow */
   
   .footer-bottom-content {
     flex-direction: column;

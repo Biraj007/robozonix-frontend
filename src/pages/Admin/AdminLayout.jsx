@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate, Outlet } from 'react-router-dom';
 import { 
   FiHome, FiFileText, FiCalendar, FiBook, FiBox, 
-  FiSettings, FiLogOut, FiGrid, FiUsers, FiTool,
+  FiLogOut, FiGrid, FiUsers, FiTool, FiMessageCircle,
   FiMenu, FiX
 } from 'react-icons/fi';
 import { useAuth } from '../../context/AuthContext';
@@ -50,6 +50,7 @@ const AdminLayout = () => {
     { path: '/admin/projects', icon: FiBox, label: 'Projects', permission: 'projects' },
     { path: '/admin/facilities', icon: FiTool, label: 'Facilities', permission: 'facilities' },
     { path: '/admin/users', icon: FiUsers, label: 'Users', permission: 'users' },
+    { path: '/admin/chatbot', icon: FiMessageCircle, label: 'Chatbot', permission: 'chatbot' },
   ];
 
   // Filter nav items based on permissions
@@ -111,7 +112,7 @@ const AdminLayout = () => {
               <Link
                 key={item.path}
                 to={item.path}
-                className={`nav-link ${isActive(item.path, item.exact) ? 'active' : ''}`}
+                className={`admin-nav-link ${isActive(item.path, item.exact) ? 'active' : ''}`}
                 onClick={closeSidebar}
               >
                 <item.icon />
@@ -122,13 +123,7 @@ const AdminLayout = () => {
 
           <div className="nav-section">
             <span className="nav-section-title">Account</span>
-            {hasPermission('settings') && (
-              <Link to="/admin/settings" className={`nav-link ${isActive('/admin/settings') ? 'active' : ''}`} onClick={closeSidebar}>
-                <FiSettings />
-                <span>Settings</span>
-              </Link>
-            )}
-            <button onClick={handleLogout} className="nav-link" style={{ width: '100%', textAlign: 'left', border: 'none', background: 'none', cursor: 'pointer' }}>
+            <button onClick={handleLogout} className="admin-nav-link" style={{ width: '100%', textAlign: 'left', border: 'none', background: 'none', cursor: 'pointer' }}>
               <FiLogOut />
               <span>Logout</span>
             </button>

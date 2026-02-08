@@ -142,6 +142,9 @@ const Login = () => {
             <p>
               Don't have an account? <Link to="/register">Sign up</Link>
             </p>
+            <p style={{ marginTop: '12px', fontSize: '0.9rem' }}>
+              <Link to="/" style={{ color: 'var(--text-muted)', textDecoration: 'none' }}>Skip</Link>
+            </p>
           </div>
         </motion.div>
       </div>

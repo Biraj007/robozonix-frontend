@@ -4,8 +4,8 @@ import { FiMessageCircle, FiX, FiSend, FiUser } from 'react-icons/fi';
 import { BsRobot } from 'react-icons/bs';
 import './Chatbot.css';
 
-// FAQ Data for Robozonix
-const faqData = [
+// Default FAQ Data (fallback if API fails)
+const defaultFaqData = [
   {
     keywords: ['hello', 'hi', 'hey', 'good morning', 'good evening'],
     response: "Hello! 👋 Welcome to Robozonix Labs! I'm your virtual assistant. How can I help you today?",
@@ -15,45 +15,12 @@ const faqData = [
     response: "We offer 4 membership plans:\n\n🆓 **Free** - Basic access\n💎 **Basic** - ₹999/month\n⭐ **Standard** - ₹1,999/month\n👑 **Premium** - ₹4,999/month\n\nVisit our Membership page for full details!",
   },
   {
-    keywords: ['lab', 'hours', 'timing', 'open', 'close', 'schedule'],
-    response: "Our labs are open:\n\n📅 Monday - Saturday\n🕐 9:00 AM - 9:00 PM\n\nPremium members get 24/7 access!",
-  },
-  {
-    keywords: ['course', 'courses', 'training', 'learn', 'class', 'workshop'],
-    response: "We offer courses in:\n\n🤖 Robotics & ROS\n🚁 Drone Design & Flight\n🔧 3D Printing & CAD\n💻 IoT & Electronics\n🧠 AI & Machine Learning\n\nCheck our Courses page for details!",
-  },
-  {
-    keywords: ['facilities', 'equipment', 'tools', 'machines', 'lab'],
-    response: "Our facilities include:\n\n🔧 Robotics Lab\n⚡ Electronics Lab\n🖨️ 3D Printing Lab\n🚁 Drone Testing Area\n💻 Computer Lab\n\nAll equipped with industry-grade tools!",
-  },
-  {
-    keywords: ['contact', 'email', 'phone', 'call', 'reach', 'address', 'location'],
-    response: "You can reach us at:\n\n📧 info@robozonix.com\n📞 +91 98765 43210\n📍 Kolkata, West Bengal, India\n\nOr visit our Contact page!",
-  },
-  {
-    keywords: ['certificate', 'certification', 'certified'],
-    response: "Yes! All our courses include:\n\n📜 Industry-recognized certificates\n✅ Completion badges\n🏆 Skills verification\n\nCertificates are valid worldwide!",
-  },
-  {
-    keywords: ['register', 'signup', 'join', 'account', 'create'],
-    response: "To join Robozonix Labs:\n\n1️⃣ Click 'Join Lab' button\n2️⃣ Fill your details\n3️⃣ Choose a membership plan\n4️⃣ Start learning!\n\nIt takes less than 2 minutes!",
-  },
-  {
-    keywords: ['project', 'projects', 'build', 'make', 'create'],
-    response: "Members can work on exciting projects like:\n\n🤖 Autonomous Robots\n🚁 Custom Drones\n🏠 Smart Home Systems\n🎮 Robotic Arms\n\nWe provide guidance and resources!",
-  },
-  {
-    keywords: ['event', 'events', 'hackathon', 'competition', 'workshop'],
-    response: "We host regular events:\n\n🏆 Monthly Hackathons\n📚 Weekend Workshops\n🎤 Tech Talks\n🤝 Networking Sessions\n\nCheck our Events page for upcoming ones!",
-  },
-  {
-    keywords: ['thank', 'thanks', 'bye', 'goodbye'],
-    response: "You're welcome! 😊 Feel free to ask if you have more questions. Happy building! 🚀",
+    keywords: ['contact', 'email', 'phone'],
+    response: "You can reach us at:\n\n📧 info@robozonix.com\n📞 +91 98765 43210\n\nOr visit our Contact page!",
   },
 ];
 
-// Quick reply suggestions
-const quickReplies = [
+const defaultQuickReplies = [
   'Membership Plans',
   'Lab Timings',
   'Available Courses',
@@ -71,6 +38,33 @@ const Chatbot = () => {
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef(null);
+  
+  // Dynamic data from API
+  const [faqData, setFaqData] = useState(defaultFaqData);
+  const [quickReplies, setQuickReplies] = useState(defaultQuickReplies);
+
+  // Fetch chatbot responses from API
+  useEffect(() => {
+    const fetchResponses = async () => {
+      try {
+        const res = await fetch('/api/content/chatbot');
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.length > 0) {
+            setFaqData(data);
+            // Extract quick replies
+            const qr = data
+              .filter(item => item.isQuickReply && item.quickReplyLabel)
+              .map(item => item.quickReplyLabel);
+            if (qr.length > 0) setQuickReplies(qr);
+          }
+        }
+      } catch (err) {
+        console.log('Using default chatbot responses');
+      }
+    };
+    fetchResponses();
+  }, []);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });

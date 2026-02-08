@@ -21,20 +21,20 @@ const SplashScreen = ({ onComplete }) => {
     const textInterval = setInterval(() => {
       currentIndex = (currentIndex + 1) % loadingTexts.length;
       setLoadingText(loadingTexts[currentIndex]);
-    }, 600);
+    }, 400);  // Faster text updates
 
-    // Simulate progress
+    // Faster progress for quicker load
     const progressInterval = setInterval(() => {
       setProgress(prev => {
         if (prev >= 100) {
           clearInterval(progressInterval);
           clearInterval(textInterval);
-          setTimeout(() => onComplete(), 300);
+          setTimeout(() => onComplete(), 50);  // Reduced from 300ms
           return 100;
         }
-        return prev + Math.random() * 15 + 5;
+        return prev + Math.random() * 20 + 10;  // Faster progress
       });
-    }, 150);
+    }, 100);  // Faster interval
 
     return () => {
       clearInterval(progressInterval);

@@ -1,0 +1,30 @@
+# RoboZonix Labs Website
+
+## Overview
+RoboZonix Labs is a premier robotics and innovation center dedicated to fostering creativity and technical skills in students and enthusiasts. The website provides information about our courses, projects, facilities, and events.
+
+## Key Sections
+
+- **Home**: Overview of the lab, featured content, and latest updates.
+- **About Us**: Information about our mission, vision, and team.
+- **Facilities**: Details about our state-of-the-art labs, equipment (3D printers, CNCs), and workspaces.
+- **Courses**: List of educational programs including Robotics, IoT, AI, and Coding.
+- **Projects**: Showcase of student and faculty projects, featuring innovative robotics solutions.
+- **Events**: Calendar of upcoming workshops, hackathons, and competitions.
+- **Membership**: Information on how to join the lab, benefits, and pricing plans.
+- **Blog**: Articles and tutorials on robotics and technology.
+- **Gallery**: Photos and videos from our events and daily activities.
+- **FAQs**: Frequently updated answers to common questions.
+- **Contact**: Reach out to us via form or find our location.
+
+## User Actions
+- **Authentication**: Users can register and login to access the dashboard.
+- **Dashboard**: personalized view for members to track progress.
+- **Admin**: Dedicated portal for managing content (blogs, events, projects).
+
+## Technology
+Built with React, Vite, Framer Motion, and Three.js for a modern, responsive, and interactive experience.
+
+## Contact Information
+- Email: robozonixlab@gmail.com
+- Location: [Your Address Here]

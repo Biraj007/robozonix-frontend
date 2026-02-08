@@ -11,7 +11,7 @@
 }
 
 .header-scrolled {
-  background: rgba(18, 18, 18, 0.95);
+  background: transparent;
   backdrop-filter: blur(20px);
   box-shadow: var(--shadow-md);
   border-bottom: 1px solid var(--border-primary);
@@ -94,23 +94,26 @@
 
 .nav-link {
   position: relative;
-  padding: 8px 12px; /* Slightly reduced padding */
+  padding: 8px 12px;
   font-family: var(--font-subheading);
-  font-size: 0.9rem; /* Slightly smaller font */
-  font-weight: 500;
+  font-size: 0.95rem; /* Slightly larger */
+  font-weight: 700; /* Bold */
   color: var(--text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   transition: var(--transition-normal);
-  white-space: nowrap; /* Prevent wrapping */
+  white-space: nowrap;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.4), 0 0 15px rgba(255, 255, 255, 0.1); /* Stronger base glow */
 }
 
 .nav-link:hover {
   color: var(--text-primary);
+  text-shadow: 0 0 12px rgba(0, 229, 255, 0.8), 0 0 25px rgba(0, 229, 255, 0.4);
 }
 
 .nav-link.active {
   color: var(--accent-cyan);
+  text-shadow: 0 0 18px rgba(0, 229, 255, 1), 0 0 35px rgba(0, 229, 255, 0.6);
 }
 
 .nav-indicator {
@@ -245,9 +248,9 @@
     display: none;
   }
   
-  .join-btn {
-    display: none; /* Hide join button on medium screens to declutter */
-  }
+  /* .join-btn {
+    display: none !important; 
+  } */
   
   .mobile-menu-toggle {
     display: flex;
